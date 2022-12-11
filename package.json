@@ -1,0 +1,21 @@
+{
+    "name": "rjanuzi-7daysofcode-mongodb",
+    "version": "1.0.0",
+    "description": "Mini-project to practice Node, Express and MongoDB",
+    "main": "index.js",
+    "scripts": {
+        "dev": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rjanuzi/ydaysofcode-mongodb.git"
+    },
+    "keywords": [],
+    "author": "Rafael B. Januzi",
+    "license": "MIT",
+    "homepage": "https://github.com/rjanuzi/ydaysofcode-mongodb.git#readme",
+    "dependencies": {
+        "express": "^4.18.2"
+    },
+    "devDependencies": {}
+}
