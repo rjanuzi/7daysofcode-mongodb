@@ -42,5 +42,16 @@ async function findByNickName(collectionName, nickName) {
   return await cursor.toArray();
 }
 
+async function insertCharacter(characterData) {
+  const database = client.db(dbName);
+  const dbCollection = database.collection("characters");
+  try {
+    return await dbCollection.insertOne(characterData);
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
 // Export findAll function
-export { findAll, findByNickName };
+export { findAll, findByNickName, insertCharacter };
