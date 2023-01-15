@@ -17,7 +17,7 @@ const uri = getMongoDbUri();
 const dbName = getMongoDbName();
 const client = new mongodb.MongoClient(uri);
 
-export default async function findAll(collectionName) {
+async function findAll(collectionName) {
   try {
     const database = client.db(dbName);
     const dbCollection = database.collection(collectionName);
@@ -31,3 +31,16 @@ export default async function findAll(collectionName) {
     await client.close();
   }
 }
+
+async function findByNickName(collectionName, nickName) {
+  const database = client.db(dbName);
+  const dbCollection = database.collection(collectionName);
+
+  const query = { nickName: nickName };
+  const cursor = dbCollection.find(query);
+
+  return await cursor.toArray();
+}
+
+// Export findAll function
+export { findAll, findByNickName };
