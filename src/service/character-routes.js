@@ -1,34 +1,35 @@
-import express from "express";
+import { Router } from "express";
+import { validateCharacter } from "../validators/character-validator.js";
 import { findAll, findByNickName, insertCharacter } from "./db-connection.js";
 
-const app = express();
-const port = 80;
+const characterRoutes = Router();
 
-// This is needed to receive posts from clients with JSON payloads
-app.use(express.json());
-
-app.get("/", (req, res) => {
+characterRoutes.get("/", async (req, res) => {
   res.send("Hello World!!!");
 });
 
-app.get("/characters", (req, res) => {
+characterRoutes.get("/:id", async (req, res) => {
+  const result = await retrieveCharacter(db, req.params.id);
+  result.id = result._id;
+  result._id = undefined;
+  if (!result) {
+    res.status(404).send({ message: "O personagem não foi encontrado" });
+  } else {
+    res.status(200).send(result);
+  }
+});
+
+characterRoutes.get("/characters", (req, res) => {
   findAll("characters")
     .then((tuples) => res.send(tuples))
     .catch((e) => res.send(e));
 });
 
-app.post("/character", (req, res) => {
+characterRoutes.post("/character", async (req, res) => {
   const characterData = req.body;
 
   // Check characterData fields
-  if (
-    typeof characterData.realName !== "string" ||
-    typeof characterData.descriptions !== "string" ||
-    typeof characterData.nickName !== "string" ||
-    characterData.realName.length <= 5 ||
-    characterData.descriptions.length <= 5 ||
-    characterData.nickName.length <= 5
-  ) {
+  if (!validateCharacter(characterData)) {
     res
       .status(400)
       .send(
@@ -46,13 +47,11 @@ app.post("/character", (req, res) => {
     });
 });
 
-app.get("/character/:nick_name", (req, res) => {
+characterRoutes.get("/character/:nick_name", async (req, res) => {
   const nick_name = req.params.nick_name;
   findByNickName("characters", nick_name)
     .then((tuples) => res.send(tuples))
     .catch((e) => res.send(e));
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on  http://localhost:${port}`);
-});
+export default characterRoutes;

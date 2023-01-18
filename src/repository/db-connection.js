@@ -17,6 +17,8 @@ const uri = getMongoDbUri();
 const dbName = getMongoDbName();
 const client = new mongodb.MongoClient(uri);
 
+export let db;
+
 async function findAll(collectionName) {
   try {
     const database = client.db(dbName);
