@@ -19,6 +19,24 @@ app.get("/characters", (req, res) => {
 
 app.post("/character", (req, res) => {
   const characterData = req.body;
+
+  // Check characterData fields
+  if (
+    typeof characterData.realName !== "string" ||
+    typeof characterData.descriptions !== "string" ||
+    typeof characterData.nickName !== "string" ||
+    characterData.realName.length <= 5 ||
+    characterData.descriptions.length <= 5 ||
+    characterData.nickName.length <= 5
+  ) {
+    res
+      .status(400)
+      .send(
+        "Invalid character data. All the fields realName, descriptions and nickName must be strings with at least 5 characters"
+      );
+    return;
+  }
+
   insertCharacter(characterData)
     .then((result) => {
       res.send("OK");
