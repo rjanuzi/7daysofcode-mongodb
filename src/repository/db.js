@@ -1,7 +1,7 @@
 import mongodb from "mongodb";
 import { DATABASE_NAME } from "./db-constants.js";
 
-const DB_CONFIG_PATH = "./db-config.json";
+const DB_CONFIG_PATH = "../../configs/db-config.json";
 
 function getMongoDbUri() {
   const dbConfig = JSON.parse(fs.readFileSync(DB_CONFIG_PATH));

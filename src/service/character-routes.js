@@ -1,12 +1,13 @@
 import { Router } from "express";
+import { db } from "../repository/db.js";
 import { validateCharacter } from "../validators/character-validator.js";
-import { findAll, findByNickName, insertCharacter } from "./db-connection.js";
+import {
+  findAll,
+  findByNickName,
+  insertCharacter,
+} from "../repository/character-repository.js";
 
 const characterRoutes = Router();
-
-characterRoutes.get("/", async (req, res) => {
-  res.send("Hello World!!!");
-});
 
 characterRoutes.get("/:id", async (req, res) => {
   const result = await retrieveCharacter(db, req.params.id);
