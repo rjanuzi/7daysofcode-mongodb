@@ -31,4 +31,17 @@ async function insertCharacter(db, characterData) {
   }
 }
 
-export { findAll, findById, findByNickName, insertCharacter };
+async function removeCharacter(db, nickName) {
+  const collection = db.collection(COLLECTION_NAMES.CHARACTERS);
+  try {
+    const result = await collection.deleteOne({ nickName: nickName });
+    return {
+      sucess: result.acknowledged,
+    };
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+export { findAll, findById, findByNickName, insertCharacter, removeCharacter };

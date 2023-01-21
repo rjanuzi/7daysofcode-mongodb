@@ -6,6 +6,7 @@ import {
   findByNickName,
   insertCharacter,
   findById,
+  removeCharacter,
 } from "../repository/character-repository.js";
 
 const characterRoutes = Router();
@@ -50,6 +51,14 @@ characterRoutes.post("/insert", async (req, res) => {
   }
 
   insertCharacter(db, characterData).then((result) => res.send(result));
+});
+
+characterRoutes.post("/remove", async (req, res) => {
+  const characterData = req.body;
+
+  removeCharacter(db, characterData.nickName).then((result) =>
+    res.send(result)
+  );
 });
 
 export default characterRoutes;
