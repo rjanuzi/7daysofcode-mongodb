@@ -9,7 +9,7 @@ const PORT = 80;
 
 initializeDatabase().then((_) => {});
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("Hello World!");
 });
 

@@ -5,12 +5,19 @@ import {
   findAll,
   findByNickName,
   insertCharacter,
+  findById,
 } from "../repository/character-repository.js";
 
 const characterRoutes = Router();
 
+characterRoutes.get("/all", (_, res) => {
+  findAll(db, "characters").then((tuples) => {
+    res.send(tuples);
+  });
+});
+
 characterRoutes.get("/:id", async (req, res) => {
-  const result = await retrieveCharacter(db, req.params.id);
+  const result = await findById(db, req.params.id);
   result.id = result._id;
   result._id = undefined;
   if (!result) {
@@ -20,13 +27,16 @@ characterRoutes.get("/:id", async (req, res) => {
   }
 });
 
-characterRoutes.get("/characters", (req, res) => {
-  findAll("characters")
-    .then((tuples) => res.send(tuples))
+characterRoutes.get("/nickname/:nick_name", async (req, res) => {
+  const nick_name = req.params.nick_name;
+  findByNickName(db, nick_name)
+    .then((tuples) => {
+      res.send(tuples);
+    })
     .catch((e) => res.send(e));
 });
 
-characterRoutes.post("/character", async (req, res) => {
+characterRoutes.post("/insert", async (req, res) => {
   const characterData = req.body;
 
   // Check characterData fields
@@ -39,20 +49,7 @@ characterRoutes.post("/character", async (req, res) => {
     return;
   }
 
-  insertCharacter(characterData)
-    .then((result) => {
-      res.send("OK");
-    })
-    .catch((e) => {
-      res.status(404).send("Error inserting character: " + e);
-    });
-});
-
-characterRoutes.get("/character/:nick_name", async (req, res) => {
-  const nick_name = req.params.nick_name;
-  findByNickName("characters", nick_name)
-    .then((tuples) => res.send(tuples))
-    .catch((e) => res.send(e));
+  insertCharacter(db, characterData).then((result) => res.send(result));
 });
 
 export default characterRoutes;

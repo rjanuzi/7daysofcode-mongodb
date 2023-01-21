@@ -2,35 +2,26 @@ import { COLLECTION_NAMES } from "./db-constants.js";
 import { ObjectId } from "mongodb";
 
 async function findAll(db, collectionName) {
-  try {
-    const dbCollection = db.collection(collectionName);
-
-    const query = {}; // empty query to find all documents
-    const cursor = dbCollection.find(query);
-
-    // replace console.dir with your callback to access individual elements
-    return await cursor.toArray();
-  } finally {
-    await client.close();
-  }
+  const collection = db.collection(collectionName);
+  return await collection.find({}).toArray();
 }
 
 async function findById(db, characterId) {
-  const dbCollection = db.collection(COLLECTION_NAMES.CHARACTERS);
+  const collection = db.collection(COLLECTION_NAMES.CHARACTERS);
   const query = { _id: new ObjectId(characterId) };
-  return await dbCollection.findOne(query);
+  return await collection.findOne(query);
 }
 
 async function findByNickName(db, nickName) {
-  const dbCollection = db.collection(COLLECTION_NAMES.CHARACTERS);
+  const collection = db.collection(COLLECTION_NAMES.CHARACTERS);
   const query = { nickName: nickName };
-  return await dbCollection.findOne(query);
+  return await collection.findOne(query);
 }
 
 async function insertCharacter(db, characterData) {
-  const dbCollection = db.collection(COLLECTION_NAMES.CHARACTERS);
+  const collection = db.collection(COLLECTION_NAMES.CHARACTERS);
   try {
-    const result = await dbCollection.insertOne({ ...characterData });
+    const result = await collection.insertOne({ ...characterData });
     return {
       id: result.insertedId,
       sucess: result.acknowledged,
@@ -41,4 +32,4 @@ async function insertCharacter(db, characterData) {
   }
 }
 
-export { findById, findByNickName, insertCharacter };
+export { findAll, findById, findByNickName, insertCharacter };

@@ -1,4 +1,4 @@
-export default function validateCharacter(characterData) {
+function validateCharacter(characterData) {
   if (typeof characterData !== "object" || characterData === null) {
     return false;
   }
@@ -24,8 +24,10 @@ export default function validateCharacter(characterData) {
     characterData.descriptions.length <= 5 ||
     characterData.nickName.length <= 5
   ) {
-    return False;
+    return false;
   }
 
-  return True;
+  return true;
 }
+
+export { validateCharacter };
