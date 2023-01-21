@@ -23,7 +23,6 @@ async function insertCharacter(db, characterData) {
   try {
     const result = await collection.insertOne({ ...characterData });
     return {
-      id: result.insertedId,
       sucess: result.acknowledged,
     };
   } catch (e) {
