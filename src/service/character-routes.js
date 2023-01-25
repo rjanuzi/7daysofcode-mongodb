@@ -33,16 +33,18 @@ characterRoutes.get("/:id", async (req, res) => {
   }
 });
 
-characterRoutes.get("/nickname/:nick_name", async (req, res) => {
-  const nick_name = req.params.nick_name;
-  findByNickName(db, nick_name)
+// Get by nickName
+characterRoutes.get("/nickname/:nickName", async (req, res) => {
+  const nickName = req.params.nickName;
+  findByNickName(db, nickName)
     .then((tuples) => {
       res.send(tuples);
     })
     .catch((e) => res.send(e));
 });
 
-characterRoutes.post("/insert", async (req, res) => {
+// Insert
+characterRoutes.put("/", async (req, res) => {
   const characterData = req.body;
 
   // Check characterData fields
@@ -58,15 +60,8 @@ characterRoutes.post("/insert", async (req, res) => {
   insertCharacter(db, characterData).then((result) => res.send(result));
 });
 
-characterRoutes.post("/remove", async (req, res) => {
-  const characterData = req.body;
-
-  removeCharacter(db, characterData.nickName).then((result) =>
-    res.send(result)
-  );
-});
-
-characterRoutes.post("/update/:id", async (req, res) => {
+// Update
+characterRoutes.put("/:id", async (req, res) => {
   const characterData = req.body;
   const cleredCharacterData = {};
 
@@ -105,6 +100,15 @@ characterRoutes.post("/update/:id", async (req, res) => {
   } catch (e) {
     res.status(500).send("Error updating the character");
   }
+});
+
+// Delete
+characterRoutes.delete("/", async (req, res) => {
+  const characterData = req.body;
+
+  removeCharacter(db, characterData.nickName).then((result) =>
+    res.send(result)
+  );
 });
 
 export default characterRoutes;

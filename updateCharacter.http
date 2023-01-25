@@ -1,4 +1,4 @@
-POST http://localhost:80/characters/update/<id> HTTP/1.1
+PUT http://localhost:80/characters/<id> HTTP/1.1
 content-type: application/json
 
 {
