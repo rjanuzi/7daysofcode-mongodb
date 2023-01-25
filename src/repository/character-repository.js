@@ -44,4 +44,27 @@ async function removeCharacter(db, nickName) {
   }
 }
 
-export { findAll, findById, findByNickName, insertCharacter, removeCharacter };
+async function updateCharacter(db, id, characterData) {
+  const collection = db.collection(COLLECTION_NAMES.CHARACTERS);
+  try {
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: characterData }
+    );
+    return {
+      sucess: result.acknowledged,
+    };
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+export {
+  findAll,
+  findById,
+  findByNickName,
+  insertCharacter,
+  removeCharacter,
+  updateCharacter,
+};

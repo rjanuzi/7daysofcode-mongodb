@@ -1,0 +1,8 @@
+POST http://localhost:80/characters/update/<id> HTTP/1.1
+content-type: application/json
+
+{
+    "realName": "Clark Kent",
+    "descriptions": "O foguete aterrissou na cidade de Smallville (por alguns anos, foi traduzida no Brasil como Pequenópolis), onde o jovem Kal-El foi descoberto pelo casal de fazendeiros Jonathan Kent e Martha Kent.",
+    "nickName": "Superman"
+}
