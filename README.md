@@ -1,6 +1,6 @@
 # 7daysofcode-mongodb
 
-This is a mini-project proposed at [7daysofcode](https://7daysofcode.io/) and arrived to me by [Alura](https://www.alura.com.br/).
+This is a mini-project proposed at [7daysofcode](https://7daysofcode.io/matricula/mongodb) and arrived to me by [Alura](https://www.alura.com.br/).
 
 The project consists in create an simple API to manage a list of Characters (Heros and Villains from comics). The list is shall be stored in a MongoDB database and the API shall provide the minimium CRUD operations (Create, Read, Update and Delete).
 
